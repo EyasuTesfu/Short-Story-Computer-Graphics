@@ -1,5 +1,5 @@
 # Short-Story-Computer-Graphics
-#Story
+# Story
 ## The short story is related to Unity and the fight against Racism
 The story involves a short poem and a historical and recent links of OpenGL generated graphics that 
 enlightens and motivates the good to come out of people and strenghten the fight against Racism.
