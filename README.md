@@ -7,6 +7,6 @@ enlightens and motivates the good to come out of people and strenghten the fight
 ## OpenGL library
 PyOpenGL version (3.1.6)
 ## Python libraries
-numpy version (1.22.2)
-pygame version (2.1.2)
+### numpy version (1.22.2)
+### pygame version (2.1.2)
 
