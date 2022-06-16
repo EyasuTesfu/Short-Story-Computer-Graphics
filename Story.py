@@ -82,15 +82,15 @@ class App:
         pg.quit()
 
 
-# class Mesh:
-#     def __init__(self) -> None:
-#         self.verticies = self.loadMesh()
-# class Student:
-# class Home:
-# class School:
-# class Mother:
-# class Road:
-# class Environment:
+class Mesh:
+    def __init__(self) -> None:
+        self.verticies = self.loadMesh()
+class Student:
+class Home:
+class School:
+class Mother:
+class Road:
+class Environment:
 
 
 class Material:
