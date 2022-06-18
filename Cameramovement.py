@@ -1,3 +1,5 @@
+from matplotlib import textpath
+
 from camera import Camera
 from ObjectLoader import ObjLoader
 from TextureLoader import load_texture_pygame
@@ -53,7 +55,7 @@ class Story:
         self.building_indicies, self.building_buffer = ObjLoader.load_model(
             "meshes/building.obj", False)
         self.woman_indicies, self.woman_buffer = ObjLoader.load_model(
-            "blender/woman/smallerwoman.obj")
+            "meshes/smallerwoman.obj")
         self.man_indicies, self.man_buffer = ObjLoader.load_model(
             "meshes/smallerdennis.obj")
         self.floor_indicies, self.floor_buffer = ObjLoader.load_model(
@@ -153,8 +155,7 @@ class Story:
 
         self.textures = glGenTextures(4)
         load_texture_pygame("textures/brick.jpg", self.textures[0])
-        load_texture_pygame(
-            "blender/woman/tex/womantexture.jpg", self.textures[1])
+        load_texture_pygame("textures/womantexture.jpg", self.textures[1])
         load_texture_pygame("textures/dennis.jpg", self.textures[2])
         load_texture_pygame("meshes/floor.jpg", self.textures[3])
 
