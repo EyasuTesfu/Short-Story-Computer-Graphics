@@ -184,20 +184,19 @@ class Story:
         self.view_location = glGetUniformLocation(shader, "view")
 
         glUniformMatrix4fv(self.project_location, 1, GL_FALSE, projection)
-<<<<<<< HEAD
-
-    # def textRender(self):
-    #     font = pygame.font.SysFont("None", 30)
-    #     with open(textpath, 'r') as f:
-    #         vertex_src = f.readlines()
-=======
-        font = pygame.font.SysFont("None", 30)
-        self.text1 = font.render("Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborumnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam  nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,", True, (255, 255, 255))
->>>>>>> 363aa28a4c27e62d052e9ef69ffd2348bf0416fb
+# <<<<<<< HEAD
+#
+#     # def textRender(self):
+#     #     font = pygame.font.SysFont("None", 30)
+#     #     with open(textpath, 'r') as f:
+#     #         vertex_src = f.readlines()
+# =======
+#         font = pygame.font.SysFont("None", 30)
+#         self.text1 = font.render("Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborumnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam  nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,", True, (255, 255, 255))
 
     def main(self):
-        font = pygame.font.SysFont("Times New Roman, Arial", 30)
-        text = font.render("Abebe beso bela",True)
+        # font = pygame.font.SysFont("Times New Roman, Arial", 30)
+        # text = font.render("Abebe beso bela",True)
         running = True
 
         while running:
@@ -242,9 +241,9 @@ class Story:
 
             self.window.fill(0)
             # text = font.render('Angle: %d°' % angle, True, (255, 255, 255))
-            w, h = self.text1.get_size()
-            self.window.blit(
-                self.text1, (self.WIDTH//2 - w//2, self.HEIGHT//2 - h//2))
+            # w, h = self.text1.get_size()
+            # self.window.blit(
+            #     self.text1, (self.WIDTH//2 - w//2, self.HEIGHT//2 - h//2))
             # rot_y = pyrr.Matrix44.from_y_rotation(0.8 * ct)
             # model = pyrr.matrix44.multiply(rot_y, building_pos)
 
@@ -281,9 +280,7 @@ class Story:
             glDrawArrays(GL_TRIANGLES, 0, len(self.floor_indicies))
 
             pygame.display.flip()
-<<<<<<< HEAD
-            pygame.display.blit(text,())
-=======
+
             playsound('audio/1.mp3')
             playsound('audio/2.mp3')
             playsound('audio/3.mp3')
@@ -291,7 +288,6 @@ class Story:
             playsound('audio/5.mp3')
             playsound('audio/6.mp3')
             pygame.quit()
->>>>>>> 363aa28a4c27e62d052e9ef69ffd2348bf0416fb
 
         pygame.quit()
 
