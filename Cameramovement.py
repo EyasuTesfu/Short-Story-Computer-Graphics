@@ -182,12 +182,14 @@ class Story:
 
         glUniformMatrix4fv(self.project_location, 1, GL_FALSE, projection)
 
-    def textRender(self):
-        font = pygame.font.SysFont("None", 30)
-        with open(textpath, 'r') as f:
-            vertex_src = f.readlines()
+    # def textRender(self):
+    #     font = pygame.font.SysFont("None", 30)
+    #     with open(textpath, 'r') as f:
+    #         vertex_src = f.readlines()
 
     def main(self):
+        font = pygame.font.SysFont("Times New Roman, Arial", 30)
+        text = font.render("Abebe beso bela",True)
         running = True
 
         while running:
@@ -263,6 +265,7 @@ class Story:
             glDrawArrays(GL_TRIANGLES, 0, len(self.floor_indicies))
 
             pygame.display.flip()
+            pygame.display.blit(text,())
 
         pygame.quit()
 
