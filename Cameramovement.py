@@ -1,4 +1,9 @@
-from matplotlib import textpath
+'''
+Joshua Tesfaye UGR/0359/12 Section 2
+Dagim Fikru UGR/4328/12 Section 2
+Short Story
+date of submission: Sunday, June 19, 2022
+'''
 
 from camera import Camera
 from ObjectLoader import ObjLoader
@@ -57,9 +62,9 @@ class Story:
         self.building_indicies, self.building_buffer = ObjLoader.load_model(
             "meshes/building.obj", False)
         self.woman_indicies, self.woman_buffer = ObjLoader.load_model(
-            "meshes/smallerwoman.obj")
+            "meshes/3dwoman.obj")
         self.man_indicies, self.man_buffer = ObjLoader.load_model(
-            "meshes/smallerdennis.obj")
+            "meshes/3dman.obj")
         self.floor_indicies, self.floor_buffer = ObjLoader.load_model(
             "meshes/floor.obj")
 
@@ -171,11 +176,11 @@ class Story:
         projection = pyrr.matrix44.create_perspective_projection_matrix(
             45, 1280 / 720, 0.1, 100)
         self.building_position = pyrr.matrix44.create_from_translation(
-            pyrr.Vector3([10, 15, -15]))
+            pyrr.Vector3([10, 15, -20]))
         self.woman_position = pyrr.matrix44.create_from_translation(
-            pyrr.Vector3([-4, 1, 20]))
+            pyrr.Vector3([-4, 1, 16]))
         self.man_position = pyrr.matrix44.create_from_translation(
-            pyrr.Vector3([-12, 1, 24]))
+            pyrr.Vector3([8, 1, 15]))
         self.floor_position = pyrr.matrix44.create_from_translation(
             pyrr.Vector3([0, 0, 0]))
 
@@ -186,6 +191,7 @@ class Story:
         glUniformMatrix4fv(self.project_location, 1, GL_FALSE, projection)
         font = pygame.font.SysFont("None", 30)
         self.text1 = font.render("Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborumnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam  nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,", True, (255, 255, 255))
+        self.runonce = True
 
     def main(self):
         running = True
@@ -271,13 +277,14 @@ class Story:
             glDrawArrays(GL_TRIANGLES, 0, len(self.floor_indicies))
 
             pygame.display.flip()
-            playsound('audio/1.mp3')
-            playsound('audio/2.mp3')
-            playsound('audio/3.mp3')
-            playsound('audio/4.mp3')
-            playsound('audio/5.mp3')
-            playsound('audio/6.mp3')
-            pygame.quit()
+            while(self.runonce == True):
+                playsound('audio/1.mp3')
+                playsound('audio/2.mp3')
+                playsound('audio/3.mp3')
+                playsound('audio/4.mp3')
+                playsound('audio/5.mp3')
+                playsound('audio/6.mp3')
+                self.runonce = False
 
         pygame.quit()
 
