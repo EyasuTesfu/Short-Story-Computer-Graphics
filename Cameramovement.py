@@ -194,6 +194,8 @@ class Story:
         self.runonce = True
 
     def main(self):
+        # font = pygame.font.SysFont("Times New Roman, Arial", 30)
+        # text = font.render("Abebe beso bela",True)
         running = True
 
         while running:
@@ -238,9 +240,9 @@ class Story:
 
             self.window.fill(0)
             # text = font.render('Angle: %d°' % angle, True, (255, 255, 255))
-            w, h = self.text1.get_size()
-            self.window.blit(
-                self.text1, (self.WIDTH//2 - w//2, self.HEIGHT//2 - h//2))
+            # w, h = self.text1.get_size()
+            # self.window.blit(
+            #     self.text1, (self.WIDTH//2 - w//2, self.HEIGHT//2 - h//2))
             # rot_y = pyrr.Matrix44.from_y_rotation(0.8 * ct)
             # model = pyrr.matrix44.multiply(rot_y, building_pos)
 
