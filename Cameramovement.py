@@ -8,6 +8,8 @@ from OpenGL.GL.shaders import compileProgram, compileShader
 from OpenGL.GL import *
 import pygame
 import os
+import time
+from playsound import playsound
 os.environ['SDL_VIDEO_WINDOW_POS'] = '400,200'
 
 
@@ -41,12 +43,12 @@ class Story:
 
         # CAMERA settings
         self.cam = Camera()
-        WIDTH, HEIGHT = 1280, 720
-        lastX, lastY = WIDTH / 2, HEIGHT / 2
+        self.WIDTH, self.HEIGHT = 1280, 720
+        lastX, lastY = self.WIDTH / 2, self.HEIGHT / 2
         self.first_mouse = True
         pygame.init()
-        pygame.display.set_mode((WIDTH, HEIGHT), pygame.OPENGL |
-                                pygame.DOUBLEBUF | pygame.RESIZABLE)  # |pygame.FULLSCREEN
+        self.window = pygame.display.set_mode((self.WIDTH, self.HEIGHT), pygame.OPENGL |
+                                              pygame.DOUBLEBUF | pygame.RESIZABLE)  # |pygame.FULLSCREEN
         pygame.mouse.set_visible(False)
         pygame.event.set_grab(True)
 
@@ -155,7 +157,8 @@ class Story:
 
         self.textures = glGenTextures(4)
         load_texture_pygame("textures/brick.jpg", self.textures[0])
-        load_texture_pygame("textures/womantexture.jpg", self.textures[1])
+        load_texture_pygame(
+            "textures/womantexture.jpg", self.textures[1])
         load_texture_pygame("textures/dennis.jpg", self.textures[2])
         load_texture_pygame("meshes/floor.jpg", self.textures[3])
 
@@ -181,11 +184,16 @@ class Story:
         self.view_location = glGetUniformLocation(shader, "view")
 
         glUniformMatrix4fv(self.project_location, 1, GL_FALSE, projection)
+<<<<<<< HEAD
 
     # def textRender(self):
     #     font = pygame.font.SysFont("None", 30)
     #     with open(textpath, 'r') as f:
     #         vertex_src = f.readlines()
+=======
+        font = pygame.font.SysFont("None", 30)
+        self.text1 = font.render("Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborumnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam  nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,", True, (255, 255, 255))
+>>>>>>> 363aa28a4c27e62d052e9ef69ffd2348bf0416fb
 
     def main(self):
         font = pygame.font.SysFont("Times New Roman, Arial", 30)
@@ -216,14 +224,14 @@ class Story:
             if keys_pressed[pygame.K_s]:
                 self.cam.process_keyboard("BACKWARD", 0.08)
 
-            mouse_pos = pygame.mouse.get_pos()
-            self.mouse_look(mouse_pos[0], mouse_pos[1])
+            mouse_position = pygame.mouse.get_pos()
+            self.mouse_look(mouse_position[0], mouse_position[1])
 
             # to been able to look around 360 degrees, still not perfect
-            if mouse_pos[0] <= 0:
-                pygame.mouse.set_pos((1279, mouse_pos[1]))
-            elif mouse_pos[0] >= 1279:
-                pygame.mouse.set_pos((0, mouse_pos[1]))
+            if mouse_position[0] <= 0:
+                pygame.mouse.set_pos((1279, mouse_position[1]))
+            elif mouse_position[0] >= 1279:
+                pygame.mouse.set_pos((0, mouse_position[1]))
 
             ct = pygame.time.get_ticks() / 1000
 
@@ -232,9 +240,17 @@ class Story:
             view = self.cam.get_view_matrix()
             glUniformMatrix4fv(self.view_location, 1, GL_FALSE, view)
 
+            self.window.fill(0)
+            # text = font.render('Angle: %d°' % angle, True, (255, 255, 255))
+            w, h = self.text1.get_size()
+            self.window.blit(
+                self.text1, (self.WIDTH//2 - w//2, self.HEIGHT//2 - h//2))
             # rot_y = pyrr.Matrix44.from_y_rotation(0.8 * ct)
             # model = pyrr.matrix44.multiply(rot_y, building_pos)
 
+            # # writing the text
+            # self.window.blit(self.text1, pyrr.matrix44.create_from_translation(
+            #     pyrr.Vector3([0, 20, 0])))
             # draw the building
             glBindVertexArray(self.VAO[0])
             glBindTexture(GL_TEXTURE_2D, self.textures[0])
@@ -265,7 +281,17 @@ class Story:
             glDrawArrays(GL_TRIANGLES, 0, len(self.floor_indicies))
 
             pygame.display.flip()
+<<<<<<< HEAD
             pygame.display.blit(text,())
+=======
+            playsound('audio/1.mp3')
+            playsound('audio/2.mp3')
+            playsound('audio/3.mp3')
+            playsound('audio/4.mp3')
+            playsound('audio/5.mp3')
+            playsound('audio/6.mp3')
+            pygame.quit()
+>>>>>>> 363aa28a4c27e62d052e9ef69ffd2348bf0416fb
 
         pygame.quit()
 
