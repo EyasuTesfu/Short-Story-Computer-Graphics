@@ -43,7 +43,7 @@ class Camera:
         self.camera_up = vector.normalise(
             vector3.cross(self.camera_right, self.camera_front))
 
-    # Camera method for the WASD movement
+   # This is the camera movement part
     def process_keyboard(self, direction, velocity):
         if direction == "FORWARD":
             self.camera_pos += self.camera_front * velocity

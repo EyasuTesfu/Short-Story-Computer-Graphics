@@ -53,27 +53,31 @@ class Story:
         self.first_mouse = True
         pygame.init()
         self.window = pygame.display.set_mode((self.WIDTH, self.HEIGHT), pygame.OPENGL |
-                                              pygame.DOUBLEBUF | pygame.RESIZABLE)  # |pygame.FULLSCREEN
+                                              pygame.DOUBLEBUF | pygame.RESIZABLE)
         pygame.mouse.set_visible(False)
         pygame.event.set_grab(True)
 
         # load here the 3d meshes
-
+        building_location = "meshes/building.obj"
         self.building_indicies, self.building_buffer = ObjLoader.load_model(
-            "meshes/building.obj", False)
+            building_location, False)
+        self.building1_indicies, self.building1_buffer = ObjLoader.load_model(
+            building_location, False)
+        self.building2_indicies, self.building2_buffer = ObjLoader.load_model(
+            building_location, False)
         self.woman_indicies, self.woman_buffer = ObjLoader.load_model(
             "meshes/3dwoman.obj")
         self.man_indicies, self.man_buffer = ObjLoader.load_model(
             "meshes/3dman.obj")
         self.floor_indicies, self.floor_buffer = ObjLoader.load_model(
-            "meshes/floor.obj")
+            "meshes/floor2.obj")
 
         shader = compileProgram(compileShader(
             vertex_src, GL_VERTEX_SHADER), compileShader(fragment_src, GL_FRAGMENT_SHADER))
 
         # self.VAO and self.VBO
-        self.VAO = glGenVertexArrays(4)
-        self.VBO = glGenBuffers(4)
+        self.VAO = glGenVertexArrays(6)
+        self.VBO = glGenBuffers(6)
         self.EBO = glGenBuffers(1)
 
         # building self.VAO
@@ -160,12 +164,62 @@ class Story:
                               self.floor_buffer.itemsize * 8, ctypes.c_void_p(20))
         glEnableVertexAttribArray(2)
 
-        self.textures = glGenTextures(4)
-        load_texture_pygame("textures/brick.jpg", self.textures[0])
+        # building1 self.VAO
+        glBindVertexArray(self.VAO[4])
+        # building1 Vertex Buffer Object
+        glBindBuffer(GL_ARRAY_BUFFER, self.VBO[4])
+        glBufferData(GL_ARRAY_BUFFER, self.building_buffer.nbytes,
+                     self.building_buffer, GL_STATIC_DRAW)
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self.EBO)
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, self.building_indicies.nbytes,
+                     self.building_indicies, GL_STATIC_DRAW)
+
+        # building1 vertices
+        glEnableVertexAttribArray(0)
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+                              self.building_buffer.itemsize * 8, ctypes.c_void_p(0))
+        # building1 textures
+        glEnableVertexAttribArray(1)
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE,
+                              self.building_buffer.itemsize * 8, ctypes.c_void_p(12))
+        # building1 normals
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE,
+                              self.building_buffer.itemsize * 8, ctypes.c_void_p(20))
+        glEnableVertexAttribArray(2)
+        # building2 self.VAO
+        glBindVertexArray(self.VAO[5])
+        # building2 Vertex Buffer Object
+        glBindBuffer(GL_ARRAY_BUFFER, self.VBO[5])
+        glBufferData(GL_ARRAY_BUFFER, self.building_buffer.nbytes,
+                     self.building_buffer, GL_STATIC_DRAW)
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self.EBO)
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, self.building_indicies.nbytes,
+                     self.building_indicies, GL_STATIC_DRAW)
+
+        # building2 vertices
+        glEnableVertexAttribArray(0)
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+                              self.building_buffer.itemsize * 8, ctypes.c_void_p(0))
+        # building2 textures
+        glEnableVertexAttribArray(1)
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE,
+                              self.building_buffer.itemsize * 8, ctypes.c_void_p(12))
+        # building2 normals
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE,
+                              self.building_buffer.itemsize * 8, ctypes.c_void_p(20))
+        glEnableVertexAttribArray(2)
+
+        self.textures = glGenTextures(6)
+        building_texture_location = "textures/brick.jpg"
+        load_texture_pygame(building_texture_location, self.textures[0])
+        load_texture_pygame(building_texture_location, self.textures[4])
+        load_texture_pygame(building_texture_location, self.textures[5])
         load_texture_pygame(
             "textures/womantexture.jpg", self.textures[1])
         load_texture_pygame("textures/dennis.jpg", self.textures[2])
-        load_texture_pygame("meshes/floor.jpg", self.textures[3])
+        load_texture_pygame("textures/marbletexture.png", self.textures[3])
 
         glUseProgram(shader)
         glClearColor(0, 0.1, 0.1, 1)
@@ -176,7 +230,11 @@ class Story:
         projection = pyrr.matrix44.create_perspective_projection_matrix(
             45, 1280 / 720, 0.1, 100)
         self.building_position = pyrr.matrix44.create_from_translation(
-            pyrr.Vector3([10, 15, -20]))
+            pyrr.Vector3([5, 10, -45]))
+        self.building1_position = pyrr.matrix44.create_from_translation(
+            pyrr.Vector3([50, 0, -5]))
+        self.building2_position = pyrr.matrix44.create_from_translation(
+            pyrr.Vector3([-33, 15, 5]))
         self.woman_position = pyrr.matrix44.create_from_translation(
             pyrr.Vector3([-4, 1, 16]))
         self.man_position = pyrr.matrix44.create_from_translation(
@@ -225,7 +283,7 @@ class Story:
             mouse_position = pygame.mouse.get_pos()
             self.mouse_look(mouse_position[0], mouse_position[1])
 
-            # to been able to look around 360 degrees, still not perfect
+            # 360 view
             if mouse_position[0] <= 0:
                 pygame.mouse.set_pos((1279, mouse_position[1]))
             elif mouse_position[0] >= 1279:
@@ -239,23 +297,27 @@ class Story:
             glUniformMatrix4fv(self.view_location, 1, GL_FALSE, view)
 
             self.window.fill(0)
-            # text = font.render('Angle: %d°' % angle, True, (255, 255, 255))
-            # w, h = self.text1.get_size()
-            # self.window.blit(
-            #     self.text1, (self.WIDTH//2 - w//2, self.HEIGHT//2 - h//2))
-            # rot_y = pyrr.Matrix44.from_y_rotation(0.8 * ct)
-            # model = pyrr.matrix44.multiply(rot_y, building_pos)
-
-            # # writing the text
-            # self.window.blit(self.text1, pyrr.matrix44.create_from_translation(
-            #     pyrr.Vector3([0, 20, 0])))
-            # draw the building
+            # draw buliding0
             glBindVertexArray(self.VAO[0])
             glBindTexture(GL_TEXTURE_2D, self.textures[0])
             glUniformMatrix4fv(self.model_location, 1,
                                GL_FALSE, self.building_position)
             glDrawElements(GL_TRIANGLES, len(
                 self.building_indicies), GL_UNSIGNED_INT, None)
+            # draw buliding1
+            glBindVertexArray(self.VAO[4])
+            glBindTexture(GL_TEXTURE_2D, self.textures[4])
+            glUniformMatrix4fv(self.model_location, 1,
+                               GL_FALSE, self.building1_position)
+            glDrawElements(GL_TRIANGLES, len(
+                self.building1_indicies), GL_UNSIGNED_INT, None)
+            # draw buliding2
+            glBindVertexArray(self.VAO[5])
+            glBindTexture(GL_TEXTURE_2D, self.textures[5])
+            glUniformMatrix4fv(self.model_location, 1,
+                               GL_FALSE, self.building2_position)
+            glDrawElements(GL_TRIANGLES, len(
+                self.building2_indicies), GL_UNSIGNED_INT, None)
 
             # draw the woman
             glBindVertexArray(self.VAO[1])
