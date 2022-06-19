@@ -1,3 +1,5 @@
+from matplotlib import textpath
+
 from camera import Camera
 from ObjectLoader import ObjLoader
 from TextureLoader import load_texture_pygame
