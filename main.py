@@ -234,7 +234,7 @@ class Story:
         self.building1_position = pyrr.matrix44.create_from_translation(
             pyrr.Vector3([50, 0, -5]))
         self.building2_position = pyrr.matrix44.create_from_translation(
-            pyrr.Vector3([-33, 15, 5]))
+            pyrr.Vector3([-40, 10, -8]))
         self.woman_position = pyrr.matrix44.create_from_translation(
             pyrr.Vector3([-4, 1, 16]))
         self.man_position = pyrr.matrix44.create_from_translation(
